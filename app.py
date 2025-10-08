@@ -8,7 +8,6 @@ import streamlit as st
 from geopy.geocoders import Nominatim
 import folium
 from streamlit_folium import st_folium
-from dotenv import load_dotenv
 
 import openai
 import openrouteservice
@@ -269,5 +268,6 @@ with col2:
         st_folium(m, width=700, height=500)
     else:
         st.info("Generate your itinerary first to see it on the map.")
+
 
 
