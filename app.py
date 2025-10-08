@@ -36,11 +36,18 @@ INTEREST_MAPPING = {
 # --- HELPERS ---
 @st.cache_data(show_spinner=False)
 def geocode_place(place_name):
-    geolocator = Nominatim(user_agent="student_travel_planner")
-    loc = geolocator.geocode(place_name, timeout=10)
-    if not loc:
+    url = "https://api.opentripmap.com/0.1/en/places/geoname"
+    try:
+        resp = requests.get(url, params={"name": place_name, "apikey": OPENTRIPMAP_KEY}, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+        if "lat" in data and "lon" in data:
+            return {"lat": float(data["lat"]), "lon": float(data["lon"]), "display_name": data.get("name", place_name)}
         return None
-    return {"lat": loc.latitude, "lon": loc.longitude, "display_name": loc.address}
+    except Exception as e:
+        st.error(f"Geocoding failed: {e}")
+        return None
+
 
 @st.cache_data(show_spinner=False)
 def fetch_pois_opentripmap(lat, lon, radius_m=5000, kinds=None, limit=50):
@@ -241,3 +248,4 @@ with col2:
         st_folium(m, width=700, height=500)
     else:
         st.info("Generate your itinerary first to see it on the map.")
+
