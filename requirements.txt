@@ -1,0 +1,9 @@
+streamlit
+requests
+geopy
+pandas
+folium
+streamlit-folium
+openai
+openrouteservice
+python-dotenv
