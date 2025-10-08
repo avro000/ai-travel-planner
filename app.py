@@ -14,10 +14,9 @@ import openai
 import openrouteservice
 
 # --- CONFIG / KEYS ---
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-OPENTRIPMAP_KEY = os.getenv("OPENTRIPMAP_KEY")
-ORS_API_KEY = os.getenv("ORS_API_KEY")
+OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
+OPENTRIPMAP_KEY = st.secrets.get("OPENTRIPMAP_KEY") or os.getenv("OPENTRIPMAP_KEY")
+ORS_API_KEY = st.secrets.get("ORS_API_KEY") or os.getenv("ORS_API_KEY")
 openai.api_key = OPENAI_API_KEY
 ors_client = openrouteservice.Client(key=ORS_API_KEY) if ORS_API_KEY else None
 
@@ -270,4 +269,5 @@ with col2:
         st_folium(m, width=700, height=500)
     else:
         st.info("Generate your itinerary first to see it on the map.")
+
 
