@@ -61,3 +61,7 @@ pip install -r requirements.txt
 ```bash
 streamlit run app.py
 ```
+### Live Demo
+---
+
+Click the link- https://ai-travel-planner-tgcuzci2342j8fdxnoxux5.streamlit.app/
